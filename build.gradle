@@ -18,7 +18,7 @@ java {
 
     toolchain {
 
-        languageVersion=JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(17)
 
     }
 
@@ -42,17 +42,41 @@ ext {
 
 dependencies {
 
+
+    // REST API
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+
+    // Resilience4j annotation
+    implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.2.0'
+
+
+    // AOP cho @CircuitBreaker
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+
+    // Config Server Client
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
+
+    // Gọi warehouse-service bằng Feign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+
+    // Actuator xem trạng thái CircuitBreaker
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+
+    // Database
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     runtimeOnly 'org.postgresql:postgresql'
 
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 }
+
 
 
 dependencyManagement {
