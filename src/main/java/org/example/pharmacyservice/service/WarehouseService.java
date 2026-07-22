@@ -28,19 +28,18 @@ public class WarehouseService {
 
     @CircuitBreaker(
             name = "warehouseCB",
-            fallbackMethod = "warehouseFallback"
+            fallbackMethod = "checkWarehouseFallback"
     )
-    public Integer checkStock(Long medicineId){
+    public String checkStock(Long medicineId){
 
 
-        System.out.println(
-                "Calling Warehouse-Service..."
-        );
+        Integer quantity =
+                warehouseClient.checkStock(medicineId);
 
 
-        return warehouseClient.checkStock(
-                medicineId
-        );
+        return "Kho tổng còn: "
+                + quantity
+                + " sản phẩm";
 
     }
 
@@ -59,6 +58,23 @@ public class WarehouseService {
 
 
         return 0;
+
+    }
+    public String checkWarehouseFallback(
+            Long medicineId,
+            Throwable e
+    ){
+
+
+        System.out.println(
+                "Warehouse lỗi: "
+                        + e.getMessage()
+        );
+
+
+        return "Không thể kết nối kho tổng. "
+                + "Hệ thống sẽ sử dụng dữ liệu tồn kho cục bộ "
+                + "để tiếp tục giao dịch";
 
     }
 

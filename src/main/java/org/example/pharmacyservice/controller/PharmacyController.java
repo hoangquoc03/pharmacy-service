@@ -22,30 +22,15 @@ public class PharmacyController {
         this.warehouseService = warehouseService;
 
     }
-
-
-
-
     @PostMapping("/sell/{medicineId}")
-    public String sellMedicine(
+    public String sell(
             @PathVariable Long medicineId
     ){
 
 
-        Integer quantity =
-                warehouseService.checkStock(
-                        medicineId
-                );
-
-
-        if(quantity <= 0){
-
-            return "Không thể bán. Kho không khả dụng";
-
-        }
-
-
-        return "Bán thuốc thành công";
+        return warehouseService.checkStock(
+                medicineId
+        );
 
     }
 
